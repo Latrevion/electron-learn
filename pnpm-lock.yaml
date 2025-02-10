@@ -9,7 +9,7 @@ importers:
   .:
     devDependencies:
       electron:
-        specifier: ^34.1.1
+        specifier: 34.1.1
         version: 34.1.1
       nodemon:
         specifier: ^3.1.9
