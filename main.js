@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require("electron");
+const { app, BrowserWindow, ipcMain } = require("electron");
 const path = require("path");
 
 function createWindow() {
@@ -21,7 +21,14 @@ function createSecondWindow(parent) {
   });
   win.loadFile("second.html");
 }
+function handleSetTitle(event, title) {
+  console.log("the event from ipcRenderer", event);
+  const webContents = event.sender;
+  const win = BrowserWindow.fromWebContents(webContents);
+  win.setTitle(title);
+}
 
 app.on("ready", () => {
+  ipcMain.on("set-title", handleSetTitle);
   createWindow();
 });
