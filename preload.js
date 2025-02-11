@@ -7,4 +7,5 @@ contextBridge.exposeInMainWorld("versions", {
 
 contextBridge.exposeInMainWorld("electron", {
   setTitle: (title) => ipcRenderer.send("set-title", title),
+  writeFile: (content) => ipcRenderer.invoke("write-file", content),
 });
