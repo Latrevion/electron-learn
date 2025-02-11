@@ -1,7 +1,8 @@
 const { app, BrowserWindow, ipcMain } = require("electron");
+const remote = require('@electron/remote/main')
 const path = require("path");
 const fs = require("fs");
-
+remote.initialize()
 function createWindow() {
   const win = new BrowserWindow({
     width: 880,
@@ -39,10 +40,11 @@ async function handleWriteFile(event, content) {
 app.on("ready", () => {
   ipcMain.on("set-title", handleSetTitle);
   ipcMain.handle("write-file", handleWriteFile);
-  let count = 1;
+  let count = 1; 
   const win = createWindow();
+  remote.enable(win.webContents)
   win.webContents.send("update-count", count);
-  setInterval(() => {
+  setInterval(() => {      
     count += 3;
     win.webContents.send("update-count", count);
   }, 3000); 

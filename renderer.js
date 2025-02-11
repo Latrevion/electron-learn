@@ -1,5 +1,6 @@
 const info = document.getElementById("info");
 const fs = window.require('fs')
+const {dialog}= window.require('@electron/remote')
 
 info.innerHTML = `Chrome (v${window.versions.chrome}),Node.js(v${window.versions.node})`;
 
@@ -11,7 +12,8 @@ const counter = document.getElementById("count");
 btn.addEventListener("click", () => {
   const title = titleInput.value;
   window.electron.setTitle(title);
-});
+  dialog.showOpenDialog({properties:['openFile','multiSelections']})
+})
 btn2.addEventListener("click", async () => {
   const content = contentInput.value;
   const len = await window.electron.writeFile(content);
