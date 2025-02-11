@@ -1,4 +1,6 @@
 const { contextBridge, ipcRenderer } = require("electron");
+const fs = require('fs')
+console.log('fs',fs)
 
 contextBridge.exposeInMainWorld("versions", {
   node: process.versions.node,
@@ -8,5 +10,9 @@ contextBridge.exposeInMainWorld("versions", {
 contextBridge.exposeInMainWorld("electron", {
   setTitle: (title) => ipcRenderer.send("set-title", title),
   writeFile: (content) => ipcRenderer.invoke("write-file", content),
-  onUpdateCount:(callback)=>ipcRenderer.on('update-count',(_event,value)=>callback(value))
+  onUpdateCount:(callback)=>ipcRenderer.on('update-count',(_event,value)=>callback(value)),
+  readFile:fs.promises.readFile
 });
+
+
+contextBridge.exposeInMainWorld('require',require)

@@ -7,8 +7,9 @@ function createWindow() {
     width: 880,
     height: 600,
     webPreferences: {
+      nodeIntegration:true,
       preload: path.join(__dirname, "preload.js"),
-    },
+    }, 
   });
   win.loadFile("index.html");
   win.webContents.openDevTools();
@@ -44,5 +45,6 @@ app.on("ready", () => {
   setInterval(() => {
     count += 3;
     win.webContents.send("update-count", count);
-  }, 3000);
-});
+  }, 3000); 
+}); 
+  
